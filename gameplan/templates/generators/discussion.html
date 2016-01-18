@@ -1,0 +1,16 @@
+{% extends "templates/base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<a href="/">
+    <p class='text-muted'>
+        Back to discussions
+    </p>
+</a>
+
+<h4>{{ title }}</h4>
+<div>
+{{ content }}
+</div>
+{% endblock %}

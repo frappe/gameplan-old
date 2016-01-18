@@ -1,0 +1,15 @@
+{% extends "templates/base.html" %}
+
+{% block title %}Gameplan for {{ name }}{% endblock %}
+
+{% block content %}
+
+{% for discussion in discussions %}
+<div>
+    <a href="/{{ discussion.parent_website_route }}/{{ discussion.page_name }}">
+        <h6>{{ discussion.title }}</h6>
+    </a>
+</div>
+{% endfor %}
+
+{% endblock %}

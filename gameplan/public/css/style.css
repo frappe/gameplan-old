@@ -1,0 +1,15 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300);
+
+* {
+	font-family: "Roboto Slab";
+}
+
+header, footer, .page-header-block {
+	display: none;
+}
+
+.new-discussion, .new-discussion-content {
+	border: none;
+	padding: 0px;
+	box-shadow: none !important;
+}

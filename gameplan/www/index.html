@@ -1,0 +1,19 @@
+<!-- title: Gameplan -->
+<!-- jinja -->
+<!-- no-cache -->
+
+<div>
+    <form type="submit" action="/new" method=GET>
+    <input class="form-control new-discussion" placeholder="Start a new dicussion..." type="text" name="title" autocomplete="off">
+    </form>
+</div>
+
+<hr>
+
+{% for discussion in discussions %}
+<div>
+    <a href="/{{ discussion.parent_website_route }}/{{ discussion.page_name }}">
+        <h6>{{ discussion.title }}</h6>
+    </a>
+</div>
+{% endfor %}
