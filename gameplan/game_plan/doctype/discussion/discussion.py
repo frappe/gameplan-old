@@ -16,5 +16,9 @@ class Discussion(WebsiteGenerator):
 
 	def validate(self):
 		super(Discussion, self).validate()
-		self.parent_website_route = frappe.db.get_value("User", self.owner, "username")
+		self.parent_website_route = frappe.db.get_value("User", self.owner,
+			"username")
+
+		if self.archived and not self.page_name.endswith("-archived"):
+			self.page_name = self.page_name + "-archived"
 

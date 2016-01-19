@@ -13,15 +13,15 @@ def update_discussion_user(doc, event):
 			frappe.get_doc({
 				"doctype": "Discussion User",
 				"name": doc.username
-			}).insert()
+			}).insert(ignore_permissions=True)
 
 		else:
 			if current_username != doc.username:
 				# username is changed!
-				frappe.rename_doc("User", current_username, doc.username)
+				frappe.rename_doc("User", current_username, doc.username, ignore_permissions=True)
 
 				# save it, since the route has changed
 				discussion_user = frappe.get_doc("Discussion User", doc.username)
-				discussion_user.save()
+				discussion_user.save(ignore_permissions=True)
 
 

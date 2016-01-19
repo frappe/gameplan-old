@@ -1,15 +1,63 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300);
-
 * {
-	font-family: "Roboto Slab";
+  font-family: "Roboto Slab";
+  font-size: 20px;
 }
-
-header, footer, .page-header-block {
-	display: none;
+* {
+  background-color: #f7f7f7;
 }
-
-.new-discussion, .new-discussion-content {
-	border: none;
-	padding: 0px;
-	box-shadow: none !important;
+header,
+footer,
+.page-header-block,
+.page-breadcrumbs {
+  display: none;
+}
+h4 {
+  font-size: 20px;
+  font-weight: 400;
+}
+.new-discussion,
+.new-discussion-content,
+.form-signin input {
+  border: none;
+  padding: 0px;
+  box-shadow: none !important;
+  background-color: #f7f7f7 !important;
+}
+.new-discussion-content {
+  overflow-x: hidden;
+  min-height: 100px;
+  max-height: 500px;
+}
+.gameplan-comment-body,
+.gameplan-comment-body * {
+  font-size: 15px;
+}
+.form-signin {
+  margin: 0px;
+  margin-top: 70px !important;
+  padding: 0px !important;
+  padding-top: 100px !important;
+  background-color: #f7f7f7 !important;
+  background-image: url(/assets/gameplan/img/gameplan.png);
+  background-repeat: no-repeat;
+  background-position: 0px 0px;
+}
+.form-signin input {
+  background-color: #f7f7f7;
+  padding: 10px 0px !important;
+  border-radius: 0px;
+  border-bottom: 1px solid #e2e2e2;
+}
+.form-signin a,
+.form-signin a:hover,
+.form-signin a:visited {
+  color: #B2BAC2 !important;
+}
+.form-signin button,
+.form-signin button:hover {
+  background-color: inherit;
+  color: #579EDF;
+  padding: 0px;
+  font-size: 14px;
 }

@@ -4,7 +4,10 @@
 
 from __future__ import unicode_literals
 import frappe
+import random
 from frappe.website.website_generator import WebsiteGenerator
+
+color_options = ['#1FBBA0', "#D40222", "#77D24B"]
 
 class DiscussionUser(WebsiteGenerator):
 	website = frappe._dict(
@@ -18,6 +21,9 @@ class DiscussionUser(WebsiteGenerator):
 		super(DiscussionUser, self).validate()
 		self.parent_website_route = ''
 		self.page_name = self.name
+
+		if not self.color:
+			self.color = color_options[random.randrange(0,3)]
 
 	def get_context(self, context):
 		context.discussions = frappe.get_all("Discussion",

@@ -20,7 +20,9 @@ app_license = "No License"
 
 # include js, css files in header of web template
 web_include_css = "/assets/gameplan/css/style.css"
-# web_include_js = "/assets/gameplan/js/gameplan.js"
+web_include_js = [
+	"/assets/gameplan/js/jquery.textarea_autosize.min.js"
+]
 
 # Home Pages
 # ----------

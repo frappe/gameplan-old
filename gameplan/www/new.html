@@ -8,13 +8,26 @@
     {{ frappe.get_fullname(frappe.user) }}
     </p>
 </a>
-<textarea class="form-control new-discussion-content" placeholder="Add a few details...">
-</textarea>
-
+{% include "gameplan/templates/includes/new_content.html" %}
 
 <script>
 frappe.ready(function() {
     $('.new-discussion').val(get_url_arg("title"));
-    $('.new-discussion-content').focus();
-})
+    $('.new-discussion-content')
+        .focus()
+        .on("keydown", function(e) {
+            if(e.which==13 && (e.ctrlKey || e.metaKey)) {
+                frappe.call({
+                    method: "gameplan.api.new_discussion",
+                    args: {
+                        title: $('.new-discussion').val(),
+                        content: $('.new-discussion-content').val()
+                    },
+                    success: function(r) {
+                        window.location.href = "/" + r.message;
+                    }
+                });
+            }
+        });
+});
 </script>
