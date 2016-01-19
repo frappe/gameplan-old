@@ -10,10 +10,11 @@
 
 <hr>
 
+
 {% for discussion in discussions %}
-<div>
+<div class="discussion-list">
     <a href="/{{ discussion.parent_website_route }}/{{ discussion.page_name }}">
-        <h6>{{ discussion.title }}</h6>
+        <h5 id="discussion-list">{{ discussion.title }}</h5>
     </a>
 </div>
 {% endfor %}

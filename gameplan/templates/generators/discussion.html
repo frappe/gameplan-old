@@ -4,15 +4,17 @@
 
 {% block content %}
 <a href="/">
-    <p class='text-muted'>
-        Back to discussions
-    </p>
+   <p class="octicon octicon-arrow-left text-muted">  Back to discussion</p>
 </a>
 
+
+<div class="gameplan-body">
 <h4>{{ title }}</h4>
-<div class="gameplan-comment-body">
 {{ content }}
+{{ name }}
 </div>
+
+<hr>
 
 <div class="comments">
 {% for comment in comments %}

@@ -1,14 +1,19 @@
 <!-- jinja -->
 
+<div class="new-discussion-form">
 <div>
 <input class="form-control new-discussion" placeholder="Start a new dicussion..." type="text" name="title" autocomplete="off">
 </div>
 <a href="/{{ username }}">
-    <p class="text-muted">
+    <p class="text-muted discussion-user">
     {{ frappe.get_fullname(frappe.user) }}
     </p>
 </a>
+</div>
+
 {% include "gameplan/templates/includes/new_content.html" %}
+
+
 
 <script>
 frappe.ready(function() {
