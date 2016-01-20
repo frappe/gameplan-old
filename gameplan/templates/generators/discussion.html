@@ -34,7 +34,9 @@
 {% endfor %}
 </div>
 
+<div class="new-content">
 {% include "gameplan/templates/includes/new_content.html" %}
+</div>
 
 <script>
 window.discussion_name = "{{ name }}";
@@ -49,7 +51,7 @@ frappe.ready(function() {
                         content: $('.new-discussion-content').val()
                     },
                     success: function(r) {
-                        $(r.message).appendTo('.comments');
+                        $(r.message).appendTo('.discussion-comments');
                         $('.new-discussion-content').val('');
                     }
                 });

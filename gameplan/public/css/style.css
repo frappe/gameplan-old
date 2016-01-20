@@ -23,7 +23,7 @@ h4 {
   margin-left: 10px;
   padding-top: 10%;
 }
-.discussion-comments .discussion-list {
+.discussion-list {
   padding-left: 10px;
 }
 .gameplan-body {
@@ -31,6 +31,9 @@ h4 {
   margin-top: -70px;
   height: 20%;
   width: 60%;
+}
+.new-content {
+  padding-left: 60px;
 }
 .container {
   padding-top: 10px;
