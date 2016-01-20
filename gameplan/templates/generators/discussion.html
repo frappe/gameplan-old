@@ -3,20 +3,32 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
+
 <a href="/">
    <p class="octicon octicon-arrow-left text-muted">  Back to discussion</p>
 </a>
 
 
+<div class="user-circle">
+<svg height="50" width="50">
+<g>
+  <circle cx="25" cy="25" r="25 " fill="#1FBBA0" />
+  <text x="19" y="31" font-family="Verdana" font-size="16" fill="white" > V </text>
+  </g>
+</svg>
+</div>
+
 <div class="gameplan-body">
 <h4>{{ title }}</h4>
+<a href="/{{ frappe.db.get_value("User", owner, "username") }}">
+<h5 class="text-muted">{{ frappe.get_fullname(owner) }}</h5></a><br>   
+
 {{ content }}
-{{ name }}
 </div>
 
 <hr>
 
-<div class="comments">
+<div class="discussion-comments">
 {% for comment in comments %}
 {% include "gameplan/templates/includes/comment.html" %}
 {% endfor %}
@@ -47,4 +59,5 @@ frappe.ready(function() {
 </script>
 
 {% endblock %}
+
 
