@@ -3,13 +3,19 @@
 {% block title %}Gameplan for {{ name }}{% endblock %}
 
 {% block content %}
-
+<div class="container">
+<a href="/">
+     <p class="octicon octicon-arrow-left text-muted">  Back to discussion</p>
+ </a>
 {% for discussion in discussions %}
-<div>
+
+
+<div class="discussion-list">
     <a href="/{{ discussion.parent_website_route }}/{{ discussion.page_name }}">
-        <h6>{{ discussion.title }}</h6>
+        <h5 class="discussion-title">{{ discussion.title }}</h5>
     </a>
 </div>
 {% endfor %}
 
 {% endblock %}
+</div>

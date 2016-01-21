@@ -30,7 +30,12 @@ class DiscussionUser(WebsiteGenerator):
             self.color = color_options[random.randrange(0, 3)]
 
     def get_context(self, context):
+        owner = frappe.db.get_value(
+            "User", {"username": context.pathname}, "email")
+        print owner
         context.discussions = frappe.get_all("Discussion",
-                                             fields=["page_name", "parent_website_route", "title"],
-                                             filters={"published": 1, "owner": frappe.session.user},
+                                             fields=[
+                                                 "page_name", "parent_website_route", "title"],
+                                             filters={
+                                                 "published": 1, "owner": owner},
                                              order_by="creation desc", limit_page_length=20)

@@ -2,6 +2,7 @@
 <!-- jinja -->
 <!-- no-cache -->
 
+<div class="container">
 <div>
     <form type="submit" action="/new" method=GET>
     <input class="form-control new-discussion" placeholder="Start a new dicussion..." type="text" name="title" autocomplete="off">
@@ -14,7 +15,8 @@
 {% for discussion in discussions %}
 <div class="discussion-list">
     <a href="/{{ discussion.parent_website_route }}/{{ discussion.page_name }}">
-        <h5 id="discussion-list">{{ discussion.title }}</h5>
+        <h5 class="discussion-title">{{ discussion.title }}</h5>
     </a>
 </div>
 {% endfor %}
+</div>

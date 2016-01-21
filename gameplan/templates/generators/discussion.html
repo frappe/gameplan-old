@@ -4,62 +4,71 @@
 
 {% block content %}
 
-<a href="/">
-   <p class="octicon octicon-arrow-left text-muted">  Back to discussion</p>
-</a>
+<div class="container">
+
+    <a href="/">
+     <p class="octicon octicon-arrow-left text-muted">  Back to discussion</p>
+ </a>
 
 
-<div class="user-circle">
-<svg height="50" width="50">
-<g>
-  <circle cx="25" cy="25" r="25 " fill="#1FBBA0" />
-  <text x="19" y="31" font-family="Verdana" font-size="16" fill="white" > V </text>
-  </g>
-</svg>
+ <div class="user-circle">
+    <svg height="50" width="50">
+        <g>
+          <circle cx="25" cy="25" r="25 " fill="{{ owner_color }}"/>
+          <text x="19" y="31" font-family="Verdana" font-size="16" fill="white" > {{ frappe.get_fullname(owner)[0] }} </text>
+      </g>
+  </svg>
 </div>
 
 <div class="gameplan-body">
-<h4>{{ title }}</h4>
-<a href="/{{ frappe.db.get_value("User", owner, "username") }}">
-<h5 class="text-muted">{{ frappe.get_fullname(owner) }}</h5></a><br>   
+    <h4>{{ title }}</h4>
+    <a href="/{{ frappe.db.get_value("User", owner , "username") }}">
+    <h5 class="text-muted">{{ frappe.get_fullname(owner) }}</h5></a>  
+        {{ content }}
+    </div>
 
-{{ content }}
-</div>
 
-<hr>
 
-<div class="discussion-comments">
-{% for comment in comments %}
-{% include "gameplan/templates/includes/comment.html" %}
-{% endfor %}
-</div>
+    <div class="discussion-comments">
+        {% for comment in comments %}
+        {% include "gameplan/templates/includes/comment.html" %}
+        {% endfor %}
+    </div>
 
-<div class="new-content">
-{% include "gameplan/templates/includes/new_content.html" %}
-</div>
+<div class="comment-card">
+    <div class="current-user">
+        {{ frappe.get_fullname(frappe.user) }}
+    </div>
+    <div class="new-comment">
+        {% include "gameplan/templates/includes/new_content.html" %}
+    </div>
+    </div>
 
-<script>
-window.discussion_name = "{{ name }}";
-frappe.ready(function() {
-    $('.new-discussion-content')
-        .on("keydown", function(e) {
-            if(e.which==13 && (e.ctrlKey || e.metaKey)) {
-                frappe.call({
-                    method: "gameplan.api.add_comment",
-                    args: {
-                        name: window.discussion_name,
-                        content: $('.new-discussion-content').val()
-                    },
-                    success: function(r) {
-                        $(r.message).appendTo('.discussion-comments');
-                        $('.new-discussion-content').val('');
-                    }
-                });
-            }
+    <script>
+        window.discussion_name = "{{ name }}";
+        frappe.ready(function() {
+            $('.new-discussion-content')
+            .on("keydown", function(e) {
+                if(e.which==13 && (e.ctrlKey || e.metaKey)) {
+                    frappe.call({
+                        method: "gameplan.api.add_comment",
+                        args: {
+                            name: window.discussion_name,
+                            content: $('.new-discussion-content').val()
+                        },
+                        success: function(r) {
+                            $(r.message).appendTo('.discussion-comments');
+                            $('.new-discussion-content').val('');
+                            $("#hint-text").hide(300);
+                        }
+                    });
+                }
+            });
         });
-});
-</script>
+    </script>
 
-{% endblock %}
+    {% endblock %}
+
+</div>
 
 

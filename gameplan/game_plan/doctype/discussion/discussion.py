@@ -19,9 +19,14 @@ class Discussion(WebsiteGenerator):
         usernames = {}
         for comment in context.comments:
             if not comment.user in usernames:
-                usernames[comment.user] = frappe.db.get_value("User", comment.user, "username")
+                usernames[comment.user] = frappe.db.get_value(
+                    "User", comment.user, "username")
             comment.username = usernames[comment.user]
-            
+
+        owner_username = frappe.db.get_value(
+            "User", context.owner, "username")
+        context.owner_color = frappe.db.get_value(
+            "Discussion User", owner_username, "color")
 
     def validate(self):
         super(Discussion, self).validate()

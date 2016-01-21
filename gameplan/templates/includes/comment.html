@@ -1,8 +1,9 @@
 <div class="gameplan-comment">
+<div>
+    <a class ="text-muted" href="/{{ comment.username }}">{{ frappe.get_fullname(comment.user) }}</div></a>
 
     <div class="gameplan-comment-body">
     {{ comment.content|markdown }}
     </div>
-    <div>
-    <a class ="text-muted" href="/{{ comment.username }}">{{ frappe.get_fullname(comment.user) }}</div></a>
+    
 </div>
