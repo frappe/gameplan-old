@@ -1,25 +1,5 @@
-
-<textarea class="form-control new-discussion-content" placeholder="Add to this discussion">
+<textarea class="form-control new-discussion-content"
+    placeholder="Add to this discussion">
 </textarea>
 <div id="hint-text" class="text-muted">Cmd + Enter to Submit
 </div>
-<hr>
-
-<script>
-frappe.ready(function() {
-    $('.new-discussion-content').textareaAutoSize();
-
-    $('.new-discussion-content').on('input', function(){
-    if( this.value ) {
-    	$("#hint-text").show(300); }
-    
-    else{
-    	$("#hint-text").hide(300);
-    }});
-
-
-});
-
-
-
-</script>

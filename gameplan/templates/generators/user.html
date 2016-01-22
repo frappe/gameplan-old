@@ -3,12 +3,11 @@
 {% block title %}Gameplan for {{ name }}{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="gameplan-container">
 <a href="/">
      <p class="octicon octicon-arrow-left text-muted">  Back to discussion</p>
  </a>
 {% for discussion in discussions %}
-
 
 <div class="discussion-list">
     <a href="/{{ discussion.parent_website_route }}/{{ discussion.page_name }}">

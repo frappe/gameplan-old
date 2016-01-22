@@ -1,17 +1,41 @@
-<div class="single-comment">
-<div class="comment-circle">
- <svg height="50" width="50">
-        <g>
-          <circle cx="25" cy="25" r="20 " fill="{{ comment.user_color }}"/>
-          <text x="19" y="31" font-family="Roboto Slab" font-size="16" fill="white" > {{ frappe.get_fullname(comment.user)[0] }} </text>
-      </g>
-  </svg>
-  </div>
-    
+{% from "templates/includes/user_circle.html" import user_circle %}
 
-    <div class="discussion-comment-body">
-    <a class ="text-muted" href="/{{ comment.username }}">{{ frappe.get_fullname(comment.user) }}</a>
-    {{ comment.content|markdown }}
+{% macro comment_block(comment, title=None, editable=False) %}
+<div class="discussion-block">
+    {{ user_circle(comment) }}
+    <div class="discussion-body">
+        {% if title %}
+            {% if editable %}
+            <input class="form-control new-discussion discussion-title"
+                placeholder="Start a new dicussion..."
+                type="text" name="title" autocomplete="off">
+            {% else %}
+            <h4 class="discussion-title">
+                {{ title }}
+            </h4>
+            {% endif %}
+        {% endif %}
+
+        <a class="text-muted user-link {{ 'no-title' if not title else '' }}" href="/{{ comment.username }}">
+            {{ comment.fullname }}</a>
+
+        {% if editable %}
+        <textarea class="form-control
+            new-discussion-content"
+            placeholder="Add to this discussion"></textarea>
+        <div class="discussion-help text-muted row">
+            <div class="col-xs-6">
+                Ctrl + Enter to post
+            </div>
+            <div class="col-xs-6 text-right">
+                Drop files here to attach
+            </div>
+        </div>
+        {% else %}
+        <div class="discussion-content">
+            {{ comment.content|markdown }}
+        </div>
+        {% endif %}
     </div>
-    
 </div>
+{% endmacro %}

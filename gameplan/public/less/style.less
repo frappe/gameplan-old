@@ -12,32 +12,16 @@ header, footer, .page-header-block, .page-breadcrumbs {
 	display: none;
 }
 
-.container{
-	padding-top:5%;
-	padding-left:3%;
-}
-
-h4 {
-	font-size: 20px;
-	font-weight: 400;
-}
-
-h5{
-	font-size:17px;
-	font-weight:300;
+.gameplan-container {
+	margin: 50px auto;
+	max-width: 700px;
 }
 
 // Index
 
-.new-discussion{
-	width:80%;		
+.new-discussion {
+	width:80%;
 }
-
-.discussion-title{
-  padding-top: 10px;
-  font-size:18px;
-}
-
 
 
 .discussion-list{
@@ -47,105 +31,85 @@ h5{
 
 // Discussion Page
 
-
-.back-to{
-padding-left:80px;
-padding-bottom:30px;
-font-size:18px;
-}
-
-.user-circle{
-	margin-left:55px;
-}
-
-
-#hint-text{
-	display:none;
-	width:70%;
-	padding-top:10px;
-	padding-left:10px;
-}
-
-
-#discussion-separator{
-	width:80%;
-
-}
-
-.discussion-bar{
-	margin-top:15px;
-}
-
-
-.discussion-body{
-	padding-left:120px;
-	margin-top:-55px;
-	font-size:17px;
-	font-weight:400;
-	padding-bottom:50px;
-}
-
-
-.discussion-user{
-	padding-left:100px;
-}
-
-.new-discussion-form{
-	color:#d3d3d3;
-}
-
-.new-comment {
-  padding-left:103px;
-  width:80%;
-}
-
-.current-user{
-	font-size:16px;
-	padding-left:113px;
-}
-
-
-.new-discussion, .new-discussion-content, .form-signin input {
+input.new-discussion, textarea.new-discussion-content, .form-signin input {
   border: none;
-  padding-top: 20px;
-  font-size:16px;
-  font-weight:400;
+  padding: 0px;
+  margin-top: 20px;
+  font-weight: 300;
   box-shadow: none !important;
-  background-color: #f7f7f7 !important;
+  background-color: inherit !important;
+  resize: none;
 }
 
-.new-discussion-content {
+textarea.new-discussion-content {
 	overflow-x: hidden;
 	max-height: 500px;
-
+	height: 20px;
 }
 
-// comment
-
-.discussion-comment-body {
-	font-size: 16px;
-	padding-bottom:15px;
-	padding-left: 65px;
+.back-to {
+	display: block;
+	margin-left: 40px;
+	font-size: 14px;
+	margin-bottom: 30px;
 }
 
+// discussion block
 
-.comment-circle{
-	width:50px;
-	height:50px;
-	margin-bottom:-36px;
+.discussion-block * {
+	transition: none;
+	-webkit-transition: none;
 }
 
-.single-comment{
-	padding-bottom:18px;
+.discussion-block {
+	transition: none;
+	-webkit-transition: none;
+	margin: 15px 0px;
+	padding: 20px 40px;
+	font-weight: 300;
 }
 
-
-.discussion-comments{
-	padding-left:53px;
-	width:90%;
-	font-weight:400;
-	padding-bottom:20px;
+.discussion-block.active, .discussion-block.active * {
+	background-color: #fff !important;
 }
+
+.discussion-block.active {
+	border-radius: 4px;
+}
+
+.discussion-title {
+	font-weight: normal;
+	font-size: 22px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+}
+
+.discussion-body {
+	padding-left: 50px;
+}
+
+.user-link.no-title {
+	display: inline-block;
+	margin-top: 10px;
+}
+
+.discussion-content {
+	margin-top: 18px;
+}
+
+.discussion-help {
+	padding-bottom: 20px;
+	padding-top: 60px;
+	border-bottom: 1px solid #e2e2e2;
+}
+
+.user-circle {
+	width: 50px;
+	height: 50px;
+	margin-bottom: -50px;
+	margin-left: -10px;
+}
+
 
 // login
 

@@ -5,6 +5,8 @@
 from __future__ import unicode_literals
 import frappe
 
+from gameplan.utils import get_user_info
+
 @frappe.whitelist()
 def new_discussion(title, content):
 	discussion = frappe.new_doc("Discussion")
@@ -30,7 +32,10 @@ def add_comment(name, content):
 	discussion.append("comments", {"content": content, "user": frappe.session.user})
 	discussion.save(ignore_permissions=True)
 
-	return frappe.get_template("gameplan/templates/includes/comment.html")\
-		.render({"comment": discussion.comments[-1] })
+	last_comment = discussion.comments[-1]
+	last_comment.update(get_user_info(last_comment.user))
+
+	return frappe.get_template("gameplan/templates/includes/new_comment.html")\
+		.render({"comment": last_comment })
 
 

@@ -4,6 +4,7 @@
 
 from __future__ import unicode_literals
 import frappe
+from frappe.utils import get_fullname
 
 def update_discussion_user(doc, event):
 	if doc.name != "Guest":
@@ -25,3 +26,24 @@ def update_discussion_user(doc, event):
 				discussion_user.save(ignore_permissions=True)
 
 
+def get_user_info(user=None):
+	if not hasattr(frappe.local, "user_info"):
+		frappe.local.user_info = {}
+
+	if not user:
+		user = frappe.session.user
+
+	if user not in frappe.local.user_info:
+		username = frappe.db.get_value(
+			"User", user, "username")
+
+		color = frappe.db.get_value(
+			"Discussion User", username, "color")
+
+		frappe.local.user_info[user] = {
+			"username": username,
+			"color": color,
+			"fullname": get_fullname(user)
+		}
+
+	return frappe.local.user_info[user]

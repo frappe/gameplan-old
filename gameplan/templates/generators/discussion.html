@@ -1,79 +1,28 @@
 {% extends "templates/base.html" %}
 
+{% from "templates/includes/comment.html" import comment_block %}
+
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
 
-<div class="container">
+<div class="gameplan-container">
+    <a href="/" class="text-muted back-to">
+        <i class="octicon octicon-chevron-left"></i> Back to Discussions
+    </a>
 
-
-    <a href="/">
-     <div class="octicon octicon-chevron-left text-muted back-to"><span>  Back to Discussions</span></div>
- </a>
-
-
- <div class="user-circle">
-    <svg height="50" width="50">
-        <g>
-          <circle cx="25" cy="25" r="20 " fill="{{ owner_color }}"/>
-          <text x="19" y="31" font-family="Roboto Slab" font-size="16" fill="white" > {{ frappe.get_fullname(owner)[0] }} </text>
-      </g>
-  </svg>
-</div>
-
-
-
-<div class="discussion-body">
-
-    <h4>{{ title }}</h4>
-    <h5>
-    <a class ="text-muted" href="/{{ owner_username }}">
-    {{ frappe.get_fullname(owner) }}</a></h5>  
-        {{ content }}
-    </div>
-
-
+    {{ comment_block(doc, doc.title) }}
 
     <div class="discussion-comments">
         {% for comment in comments %}
-        {% include "gameplan/templates/includes/comment.html" %}
+            {{ comment_block(comment) }}
         {% endfor %}
     </div>
 
-<div class="comment-card">
-    <div class="current-user">
-        {{ frappe.get_fullname(frappe.user) }}
-    </div>
-    <div class="new-comment">
-        {% include "gameplan/templates/includes/new_content.html" %}
-    </div>
-    </div>
-
-    <script>
-        window.discussion_name = "{{ name }}";
-        frappe.ready(function() {
-            $('.new-discussion-content')
-            .on("keydown", function(e) {
-                if(e.which==13 && (e.ctrlKey || e.metaKey)) {
-                    frappe.call({
-                        method: "gameplan.api.add_comment",
-                        args: {
-                            name: window.discussion_name,
-                            content: $('.new-discussion-content').val()
-                        },
-                        success: function(r) {
-                            $(r.message).appendTo('.discussion-comments');
-                            $('.new-discussion-content').val('');
-                            $("#hint-text").hide(300);
-                        }
-                    });
-                }
-            });
-        });
-    </script>
-
-    {% endblock %}
+    {{ comment_block(doc, editable=True) }}
 
 </div>
+<script>window.discussion_name = "{{ name }}";</script>
+{% endblock %}
 
 

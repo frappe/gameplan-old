@@ -1,31 +1,14 @@
 <!-- jinja -->
 
-<div class="container">
-<a href="/">
-     <div class="octicon octicon-chevron-left text-muted back-to"><span>  Back to Discussions</span></div>
- </a>
 
- <div class="user-circle">
-    <svg height="50" width="50">
-        <g>
-          <circle cx="25" cy="25" r="20 " fill="{{ user_color }}"/>
-          <text x="19" y="31" font-family="Roboto Slab" font-size="16" fill="white" > {{ frappe.get_fullname(frappe.user)[0] }} </text>
-      </g>
-  </svg>
-</div>
-<div class="gameplan-body">
-<div>
-<input class="form-control new-discussion" placeholder="Start a new dicussion..." type="text" name="title" autocomplete="off">
-</div>
-<a href="/{{ username }}">
-    <p class="text-muted">
-    {{ frappe.get_fullname(frappe.user) }}
-    </p>
-</a>
-</div>
+{% from "templates/includes/comment.html" import comment_block %}
 
-{% include "gameplan/templates/includes/new_content.html" %}
-
+<div class="gameplan-container">
+    <a href="/">
+        <div class="octicon octicon-chevron-left text-muted back-to">
+            <span>  Back to Discussions</span></div>
+    </a>
+    {{ comment_block(user_info, title, editable=True) }}
 </div>
 
 <script>
@@ -33,7 +16,7 @@ frappe.ready(function() {
     $('.new-discussion').val(get_url_arg("title"));
     $('.new-discussion-content')
         .focus()
-        .on("keydown", function(e) {
+            .on("keydown", function(e) {
             if(e.which==13 && (e.ctrlKey || e.metaKey)) {
                 frappe.call({
                     method: "gameplan.api.new_discussion",
