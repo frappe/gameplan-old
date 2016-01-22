@@ -1,8 +1,16 @@
-<div class="gameplan-comment">
-<div>
-    <a class ="text-muted" href="/{{ comment.username }}">{{ frappe.get_fullname(comment.user) }}</div></a>
+<div class="single-comment">
+<div class="comment-circle">
+ <svg height="50" width="50">
+        <g>
+          <circle cx="25" cy="25" r="20 " fill="{{ comment.user_color }}"/>
+          <text x="19" y="31" font-family="Roboto Slab" font-size="16" fill="white" > {{ frappe.get_fullname(comment.user)[0] }} </text>
+      </g>
+  </svg>
+  </div>
+    
 
-    <div class="gameplan-comment-body">
+    <div class="discussion-comment-body">
+    <a class ="text-muted" href="/{{ comment.username }}">{{ frappe.get_fullname(comment.user) }}</a>
     {{ comment.content|markdown }}
     </div>
     

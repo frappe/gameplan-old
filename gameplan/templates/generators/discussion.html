@@ -6,24 +6,29 @@
 
 <div class="container">
 
+
     <a href="/">
-     <p class="octicon octicon-arrow-left text-muted">  Back to discussion</p>
+     <div class="octicon octicon-chevron-left text-muted back-to"><span>  Back to Discussions</span></div>
  </a>
 
 
  <div class="user-circle">
     <svg height="50" width="50">
         <g>
-          <circle cx="25" cy="25" r="25 " fill="{{ owner_color }}"/>
-          <text x="19" y="31" font-family="Verdana" font-size="16" fill="white" > {{ frappe.get_fullname(owner)[0] }} </text>
+          <circle cx="25" cy="25" r="20 " fill="{{ owner_color }}"/>
+          <text x="19" y="31" font-family="Roboto Slab" font-size="16" fill="white" > {{ frappe.get_fullname(owner)[0] }} </text>
       </g>
   </svg>
 </div>
 
-<div class="gameplan-body">
+
+
+<div class="discussion-body">
+
     <h4>{{ title }}</h4>
-    <a href="/{{ frappe.db.get_value("User", owner , "username") }}">
-    <h5 class="text-muted">{{ frappe.get_fullname(owner) }}</h5></a>  
+    <h5>
+    <a class ="text-muted" href="/{{ owner_username }}">
+    {{ frappe.get_fullname(owner) }}</a></h5>  
         {{ content }}
     </div>
 

@@ -11,47 +11,54 @@ footer,
 .page-breadcrumbs {
   display: none;
 }
+.container {
+  padding-top: 5%;
+  padding-left: 3%;
+}
 h4 {
   font-size: 20px;
   font-weight: 400;
+}
+h5 {
+  font-size: 17px;
+  font-weight: 300;
+}
+.new-discussion {
+  width: 80%;
 }
 .discussion-title {
   padding-top: 10px;
   font-size: 18px;
 }
-.container {
-  padding-top: 30px;
-}
 .discussion-list {
   padding-left: 10px;
 }
+.back-to {
+  padding-left: 80px;
+  padding-bottom: 30px;
+  font-size: 18px;
+}
 .user-circle {
   margin-left: 55px;
-  padding-top: 120px;
 }
 #hint-text {
   display: none;
-  width: 90%;
+  width: 70%;
   padding-top: 10px;
   padding-left: 10px;
 }
 #discussion-separator {
   width: 80%;
 }
-.gameplan-body {
+.discussion-bar {
+  margin-top: 15px;
+}
+.discussion-body {
   padding-left: 120px;
-  margin-top: -70px;
-  height: 20%;
-  width: 90%;
+  margin-top: -55px;
   font-size: 17px;
   font-weight: 400;
   padding-bottom: 50px;
-}
-.back-to {
-  margin-bottom: 10%;
-}
-.comment-card {
-  background-color: #fff !important;
 }
 .discussion-user {
   padding-left: 100px;
@@ -61,6 +68,7 @@ h4 {
 }
 .new-comment {
   padding-left: 103px;
+  width: 80%;
 }
 .current-user {
   font-size: 16px;
@@ -80,13 +88,21 @@ h4 {
   overflow-x: hidden;
   max-height: 500px;
 }
-.gameplan-comment-body,
-.gameplan-comment-body * {
+.discussion-comment-body {
   font-size: 16px;
   padding-bottom: 15px;
+  padding-left: 65px;
+}
+.comment-circle {
+  width: 50px;
+  height: 50px;
+  margin-bottom: -36px;
+}
+.single-comment {
+  padding-bottom: 18px;
 }
 .discussion-comments {
-  padding-left: 115px;
+  padding-left: 53px;
   width: 90%;
   font-weight: 400;
   padding-bottom: 20px;

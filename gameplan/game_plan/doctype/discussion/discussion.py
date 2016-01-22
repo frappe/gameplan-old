@@ -15,18 +15,26 @@ class Discussion(WebsiteGenerator):
         no_cache=True
     )
 
+    def get_email(self, username):
+        return frappe.db.get_value(
+            "User", username, "username")
+
     def get_context(self, context):
         usernames = {}
+        user_colors = {}
         for comment in context.comments:
             if not comment.user in usernames:
                 usernames[comment.user] = frappe.db.get_value(
                     "User", comment.user, "username")
+                user_colors[comment.user] = frappe.db.get_value(
+                    "Discussion User", self.get_email(comment.user), "color")
+                print(user_colors)
             comment.username = usernames[comment.user]
+            comment.user_color = user_colors[comment.user]
 
-        owner_username = frappe.db.get_value(
-            "User", context.owner, "username")
+        context.owner_username = self.get_email(context.owner)
         context.owner_color = frappe.db.get_value(
-            "Discussion User", owner_username, "color")
+            "Discussion User", context.owner_username, "color")
 
     def validate(self):
         super(Discussion, self).validate()
