@@ -25,6 +25,8 @@ class Discussion(WebsiteGenerator):
 
 		context.doc.update(get_user_info(context.owner))
 
+		context.user_info = get_user_info(frappe.session.user)
+
 	def validate(self):
 		super(Discussion, self).validate()
 		self.parent_website_route = frappe.db.get_value("User", self.owner,

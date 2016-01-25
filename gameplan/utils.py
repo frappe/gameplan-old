@@ -4,7 +4,7 @@
 
 from __future__ import unicode_literals
 import frappe
-from frappe.utils import get_fullname
+from frappe.utils import get_fullname, now_datetime
 
 def update_discussion_user(doc, event):
 	if doc.name != "Guest":
@@ -47,3 +47,34 @@ def get_user_info(user=None):
 		}
 
 	return frappe.local.user_info[user]
+
+def timesince(dt, default="just now", small=False):
+	"""
+	Returns string representing "time since" e.g.
+	3 days ago, 5 hours ago etc.
+	"""
+	now = now_datetime()
+	print now, dt
+
+	diff = now - dt
+
+	periods = (
+		(diff.days / 365, "year", "years"),
+		(diff.days / 30, "month", "months"),
+		(diff.days / 7, "week", "weeks"),
+		(diff.days, "day", "days"),
+		(diff.seconds / 3600, "hour", "hours"),
+		(diff.seconds / 60, "minute", "minutes"),
+		(diff.seconds, "second", "seconds"),
+	)
+
+	print now, dt, diff.days, diff.seconds
+
+	for period, singular, plural in periods:
+		if period:
+			if small:
+				return "%d %s" % (period, singular[0])
+			else:
+				return "%d %s ago" % (period, singular if period == 1 else plural)
+
+	return default

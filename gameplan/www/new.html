@@ -13,6 +13,7 @@
 
 <script>
 frappe.ready(function() {
+    $(".discussion-block").addClass("active");
     $('.new-discussion').val(get_url_arg("title"));
     $('.new-discussion-content')
         .focus()

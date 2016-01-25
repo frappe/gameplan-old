@@ -14,10 +14,63 @@
 
 
 {% for discussion in discussions %}
-<div class="discussion-list">
-    <a href="/{{ discussion.parent_website_route }}/{{ discussion.page_name }}">
-        <h4 class="discussion-title">{{ discussion.title }}</h5>
-    </a>
+<div class="discussion-list-item"
+    {%- if discussion.owner==frappe.user -%}
+        data-name="{{ discussion.name }}"{% endif %}>
+    <div class="delete-item discussion-icon hide">
+        <i class="octicon octicon-x"></i>
+    </div>
+    <div class="unread discussion-icon hide">
+        <i class="octicon octicon-primitive-dot"></i>
+    </div>
+    <div class="text-muted timestamp discussion-icon">
+        {{ discussion.timesince }}
+    </div>
+    <h5>
+        <a href="/{{ discussion.parent_website_route }}/{{ discussion.page_name }}">
+        {{ discussion.title }}</a>
+    </h5>
 </div>
 {% endfor %}
 </div>
+
+<script>
+frappe.ready(function() {
+
+    // hover
+    $(".discussion-list-item")
+        .on("mouseover", function() {
+            var $this = $(this);
+            if($this.attr("data-name")) {
+                $this.find('.discussion-icon').addClass('hide');
+                $this.find('.delete-item').removeClass('hide');
+            }
+        })
+        .on("mouseout", function() {
+            var $this = $(this);
+            if($this.attr("data-name")) {
+                $this.find('.discussion-icon').addClass('hide');
+
+                if($this.attr('data-unread')=='1') {
+                    $this.find('.unread').removeClass('hide');
+                } else {
+                    $this.find('.timestamp').removeClass('hide');
+                }
+            }
+        });
+
+    // delete
+    $('.delete-item').on('click', function() {
+        var $item = $(this).parent();
+        frappe.call({
+            method: 'gameplan.api.delete_discussion',
+            args: {
+                name: $item.attr('data-name')
+            },
+            success: function() {
+                $item.addClass("hide");
+            }
+        });
+    });
+})
+</script>

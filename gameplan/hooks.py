@@ -32,9 +32,10 @@ web_include_js = [
 home_page = "index"
 
 # website user home page (by Role)
-# role_home_page = {
-#	"Role": "home_page"
-# }
+role_home_page = {
+	"Guest": "login",
+	"All": "index"
+}
 
 # Generators
 # ----------

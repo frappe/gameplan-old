@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 import frappe
 
 from gameplan.utils import get_user_info
+from frappe import _
 
 @frappe.whitelist()
 def new_discussion(title, content):
@@ -39,3 +40,11 @@ def add_comment(name, content):
 		.render({"comment": last_comment })
 
 
+@frappe.whitelist()
+def delete_discussion(name):
+	discussion = frappe.get_doc("Discussion", name)
+	if discussion.owner == frappe.session.user:
+		discussion.published = 0
+		discussion.save(ignore_permissions=True)
+	else:
+		frappe.throw(_("Not Permitted"))

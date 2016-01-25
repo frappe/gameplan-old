@@ -19,22 +19,35 @@ header, footer, .page-header-block, .page-breadcrumbs {
 
 // Index
 
-.new-discussion {
-	width:80%;
+.discussion-list-item {
+	margin: 0px -15px;
+	padding: 7px 15px;
 }
 
-
-.discussion-list{
-	padding-left:10px;
+.discussion-list-item:hover, .discussion-list-item:hover * {
+	background-color: #fff;
 }
 
+.discussion-list-item h5 {
+	margin-left: 40px;
+	font-size: 14px;
+}
+
+.discussion-list-item .discussion-icon {
+	margin-top: 10px;
+	float: left;
+	display: inline-block;
+}
+
+.discussion-icon .octicon {
+	cursor: pointer;
+}
 
 // Discussion Page
 
 input.new-discussion, textarea.new-discussion-content, .form-signin input {
   border: none;
   padding: 0px;
-  margin-top: 20px;
   font-weight: 300;
   box-shadow: none !important;
   background-color: inherit !important;
@@ -45,6 +58,7 @@ textarea.new-discussion-content {
 	overflow-x: hidden;
 	max-height: 500px;
 	height: 20px;
+	margin-top: 20px;
 }
 
 .back-to {
