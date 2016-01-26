@@ -16,14 +16,17 @@
 {% for discussion in discussions %}
 <div class="discussion-list-item"
     {%- if discussion.owner==frappe.user -%}
-        data-name="{{ discussion.name }}"{% endif %}>
+        data-name="{{ discussion.name }}"{% endif %}
+    {%- if discussion.unread %} data-unread=1{% endif %}>
     <div class="delete-item discussion-icon hide">
         <i class="octicon octicon-x"></i>
     </div>
-    <div class="unread discussion-icon hide">
+    <div class="unread discussion-icon
+        {%- if not discussion.unread %} hide{% endif %}">
         <i class="octicon octicon-primitive-dot"></i>
     </div>
-    <div class="text-muted timestamp discussion-icon">
+    <div class="text-muted timestamp discussion-icon
+        {%- if discussion.unread %} hide{% endif %}">
         {{ discussion.timesince }}
     </div>
     <h5>

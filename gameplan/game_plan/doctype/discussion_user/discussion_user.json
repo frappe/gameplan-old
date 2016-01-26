@@ -7,7 +7,7 @@
  "custom": 0, 
  "docstatus": 0, 
  "doctype": "DocType", 
- "document_type": "System", 
+ "document_type": "Setup", 
  "fields": [
   {
    "allow_on_submit": 0, 
@@ -140,7 +140,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2016-01-20 15:47:42.772548", 
+ "modified": "2016-01-26 14:35:12.102145", 
  "modified_by": "Administrator", 
  "module": "Game Plan", 
  "name": "Discussion User", 

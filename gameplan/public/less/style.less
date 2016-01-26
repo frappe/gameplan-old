@@ -1,3 +1,6 @@
+@link-color: #579EDF;
+@text-muted: #B2BAC2;
+
 @import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300);
 
 * {
@@ -43,12 +46,15 @@ header, footer, .page-header-block, .page-breadcrumbs {
 	cursor: pointer;
 }
 
+.unread {
+	color: @link-color;
+}
+
 // Discussion Page
 
 input.new-discussion, textarea.new-discussion-content, .form-signin input {
   border: none;
   padding: 0px;
-  font-weight: 300;
   box-shadow: none !important;
   background-color: inherit !important;
   resize: none;
@@ -80,7 +86,6 @@ textarea.new-discussion-content {
 	-webkit-transition: none;
 	margin: 15px 0px;
 	padding: 20px 40px;
-	font-weight: 300;
 }
 
 .discussion-block.active, .discussion-block.active * {
@@ -148,13 +153,13 @@ textarea.new-discussion-content {
 .form-signin a,
 .form-signin a:hover,
 .form-signin a:visited {
-	color: #B2BAC2 !important;
+	color: @text-muted !important;
 }
 
 
 .form-signin button, .form-signin button:hover {
 	background-color: inherit;
-	color: #579EDF;
+	color: @link-color;
 	padding: 0px;
 	font-size: 14px;
 }

@@ -31,6 +31,7 @@ def new_discussion(title, content):
 def add_comment(name, content):
 	discussion = frappe.get_doc("Discussion", name)
 	discussion.append("comments", {"content": content, "user": frappe.session.user})
+	discussion.read = None
 	discussion.save(ignore_permissions=True)
 
 	last_comment = discussion.comments[-1]

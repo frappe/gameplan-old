@@ -35,12 +35,14 @@ footer,
 .discussion-icon .octicon {
   cursor: pointer;
 }
+.unread {
+  color: #579EDF;
+}
 input.new-discussion,
 textarea.new-discussion-content,
 .form-signin input {
   border: none;
   padding: 0px;
-  font-weight: 300;
   box-shadow: none !important;
   background-color: inherit !important;
   resize: none;
@@ -66,7 +68,6 @@ textarea.new-discussion-content {
   -webkit-transition: none;
   margin: 15px 0px;
   padding: 20px 40px;
-  font-weight: 300;
 }
 .discussion-block.active,
 .discussion-block.active * {
