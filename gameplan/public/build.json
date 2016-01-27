@@ -1,0 +1,8 @@
+{
+	"js/gameplan.min.js": [
+		"public/js/jquery.textarea_autosize.min.js",
+		["frappe", "public/js/lib/socket.io.min.js"],
+		["frappe", "public/js/frappe/socketio_client.js"],
+		"public/js/gameplan.js"
+	]
+}

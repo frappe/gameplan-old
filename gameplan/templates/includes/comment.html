@@ -1,7 +1,7 @@
 {% from "templates/includes/user_circle.html" import user_circle %}
 
 {% macro comment_block(comment, title=None, editable=False) %}
-<div class="discussion-block">
+<div class="discussion-block {% if editable %}editable{% endif %}">
     {{ user_circle(comment) }}
     <div class="discussion-body">
         {% if title %}

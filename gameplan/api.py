@@ -5,7 +5,7 @@
 from __future__ import unicode_literals
 import frappe
 
-from gameplan.utils import get_user_info
+from gameplan.utils import get_user_info, get_discussion_list
 from frappe import _
 
 @frappe.whitelist()
@@ -25,6 +25,8 @@ def new_discussion(title, content):
 		discussion.content = content
 		discussion.insert(ignore_permissions=True)
 
+	frappe.publish_realtime("discussion_list_update")
+
 	return discussion.get_route()
 
 @frappe.whitelist()
@@ -37,8 +39,14 @@ def add_comment(name, content):
 	last_comment = discussion.comments[-1]
 	last_comment.update(get_user_info(last_comment.user))
 
-	return frappe.get_template("gameplan/templates/includes/new_comment.html")\
-		.render({"comment": last_comment })
+	frappe.publish_realtime("new_comment", {
+		"discussion_name": discussion.name,
+		"comment_html": frappe.get_template("gameplan/templates/includes/new_comment.html")\
+			.render({"comment": last_comment })
+	})
+	frappe.publish_realtime("discussion_list_update", {})
+
+	return "ok"
 
 
 @frappe.whitelist()
@@ -47,5 +55,13 @@ def delete_discussion(name):
 	if discussion.owner == frappe.session.user:
 		discussion.published = 0
 		discussion.save(ignore_permissions=True)
+
+		frappe.publish_realtime("discussion_list_update", {})
+
 	else:
 		frappe.throw(_("Not Permitted"))
+
+@frappe.whitelist()
+def refresh_discussion_list():
+	return frappe.get_template("gameplan/templates/includes/discussion_list.html")\
+		.render({ "discussions": get_discussion_list() })

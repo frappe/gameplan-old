@@ -3,77 +3,73 @@
 <!-- no-cache -->
 
 <div class="gameplan-container">
-<div class="new-discussion">
-    <form type="submit" action="/new" method=GET>
-    <input class="form-control new-discussion" placeholder="Start a new dicussion..." type="text" name="title" autocomplete="off">
-    </form>
-    <hr>
-</div>
-
-
-
-
-{% for discussion in discussions %}
-<div class="discussion-list-item"
-    {%- if discussion.owner==frappe.user -%}
-        data-name="{{ discussion.name }}"{% endif %}
-    {%- if discussion.unread %} data-unread=1{% endif %}>
-    <div class="delete-item discussion-icon hide">
-        <i class="octicon octicon-x"></i>
+    <div class="new-discussion">
+        <form type="submit" action="/new" method=GET>
+        <input class="form-control new-discussion" placeholder="Start a new dicussion..." type="text" name="title" autocomplete="off">
+        </form>
+        <hr>
     </div>
-    <div class="unread discussion-icon
-        {%- if not discussion.unread %} hide{% endif %}">
-        <i class="octicon octicon-primitive-dot"></i>
-    </div>
-    <div class="text-muted timestamp discussion-icon
-        {%- if discussion.unread %} hide{% endif %}">
-        {{ discussion.timesince }}
-    </div>
-    <h5>
-        <a href="/{{ discussion.parent_website_route }}/{{ discussion.page_name }}">
-        {{ discussion.title }}</a>
-    </h5>
-</div>
-{% endfor %}
+
+    {% include "gameplan/templates/includes/discussion_list.html" %}
+
 </div>
 
 <script>
 frappe.ready(function() {
+    frappe.socket.init();
+    discussion_list.bind_events();
 
-    // hover
-    $(".discussion-list-item")
-        .on("mouseover", function() {
-            var $this = $(this);
-            if($this.attr("data-name")) {
-                $this.find('.discussion-icon').addClass('hide');
-                $this.find('.delete-item').removeClass('hide');
+    // auto-refresh
+	frappe.realtime.on("discussion_list_update", function(data) {
+        console.log(data);
+        frappe.call({
+            method: 'gameplan.api.refresh_discussion_list',
+            success: function(data) {
+                $('.discussion-list').replaceWith(data.message);
+                discussion_list.bind_events();
             }
         })
-        .on("mouseout", function() {
-            var $this = $(this);
-            if($this.attr("data-name")) {
-                $this.find('.discussion-icon').addClass('hide');
-
-                if($this.attr('data-unread')=='1') {
-                    $this.find('.unread').removeClass('hide');
-                } else {
-                    $this.find('.timestamp').removeClass('hide');
-                }
-            }
-        });
-
-    // delete
-    $('.delete-item').on('click', function() {
-        var $item = $(this).parent();
-        frappe.call({
-            method: 'gameplan.api.delete_discussion',
-            args: {
-                name: $item.attr('data-name')
-            },
-            success: function() {
-                $item.addClass("hide");
-            }
-        });
     });
-})
+
+});
+
+var discussion_list = {
+    bind_events: function() {
+        // hover
+        $(".discussion-list-item")
+            .on("mouseover", function() {
+                var $this = $(this);
+                if($this.attr("data-name")) {
+                    $this.find('.discussion-icon').addClass('hide');
+                    $this.find('.delete-item').removeClass('hide');
+                }
+            })
+            .on("mouseout", function() {
+                var $this = $(this);
+                if($this.attr("data-name")) {
+                    $this.find('.discussion-icon').addClass('hide');
+
+                    if($this.attr('data-unread')=='1') {
+                        $this.find('.unread').removeClass('hide');
+                    } else {
+                        $this.find('.timestamp').removeClass('hide');
+                    }
+                }
+            });
+
+        // delete
+        $('.delete-item').on('click', function() {
+            var $item = $(this).parent();
+            frappe.call({
+                method: 'gameplan.api.delete_discussion',
+                args: {
+                    name: $item.attr('data-name')
+                },
+                success: function() {
+                    $item.addClass("hide");
+                }
+            });
+        });
+    }
+}
 </script>

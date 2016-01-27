@@ -4,7 +4,24 @@
 
 from __future__ import unicode_literals
 import frappe
+import json
 from frappe.utils import get_fullname, now_datetime
+
+def get_discussion_list():
+	discussions = frappe.get_all("Discussion",
+		fields=["page_name", "parent_website_route", "title", "owner", "name",
+			"modified", "`read`"],
+		filters={"published": 1},
+		order_by="modified desc", limit_page_length=20)
+
+	for d in discussions:
+		d.timesince = timesince(d.modified, default="now", small=True)
+		d.read = json.loads(d.read or "[]")
+		if not frappe.session.user in d.read:
+			d.unread = True
+
+	return discussions
+
 
 def update_discussion_user(doc, event):
 	if doc.name != "Guest":
@@ -67,8 +84,6 @@ def timesince(dt, default="just now", small=False):
 		(diff.seconds / 60, "minute", "minutes"),
 		(diff.seconds, "second", "seconds"),
 	)
-
-	print now, dt, diff.days, diff.seconds
 
 	for period, singular, plural in periods:
 		if period:
