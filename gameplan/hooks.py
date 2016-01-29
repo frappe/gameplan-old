@@ -34,6 +34,8 @@ role_home_page = {
 	"All": "index"
 }
 
+get_website_user_home_page = 'gameplan.utils.get_home_page'
+
 # Generators
 # ----------
 

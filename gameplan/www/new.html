@@ -4,33 +4,36 @@
 {% from "templates/includes/comment.html" import comment_block %}
 
 <div class="gameplan-container">
-    <a href="/">
-        <div class="octicon octicon-chevron-left text-muted back-to">
-            <span>  Back to Discussions</span></div>
-    </a>
-    {{ comment_block(user_info, title, editable=True) }}
+	<a href="/">
+		<div class="octicon octicon-chevron-left text-muted back-to">
+			<span>  Back to Discussions</span></div>
+	</a>
+	{{ comment_block(user_info, title, editable=True) }}
 </div>
 
 <script>
 frappe.ready(function() {
-    $(".discussion-block").addClass("active");
-    $('.new-discussion').val(get_url_arg("title"));
-    $('.new-discussion-content')
-        .focus()
-            .on("keydown", function(e) {
-            if(e.which==13 && (e.ctrlKey || e.metaKey)) {
-                frappe.call({
-                    method: "gameplan.api.new_discussion",
-                    args: {
-                        title: $('.new-discussion').val(),
-                        content: $('.new-discussion-content').val()
-                    },
-                    success: function(r) {
-                        window.location.href = "/" + r.message;
-                    }
-                });
-            }
-        });
+	gameplan.setup_dropfile();
+
+	$(".discussion-block").addClass("active");
+	$('.new-discussion').val(get_url_arg("title"));
+	$('.new-discussion-content')
+		.focus()
+			.on("keydown", function(e) {
+			if(e.which==13 && (e.ctrlKey || e.metaKey)) {
+				frappe.call({
+					method: "gameplan.api.new_discussion",
+					args: {
+						title: $('.new-discussion').val(),
+						content: $('.new-discussion-content').val(),
+						files: gameplan.get_files()
+					},
+					success: function(r) {
+						window.location.href = "/" + r.message;
+					}
+				});
+			}
+		});
 });
 </script>
 

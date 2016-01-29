@@ -3,6 +3,13 @@
 <!-- no-cache -->
 
 <div class="gameplan-container">
+    <div class="search-wrapper">
+		<i class="octicon octicon-search"></i>
+        <form type="submit" action="/" method=GET>
+        <input class="form-control search" placeholder="Search" type="text" name="q" autocomplete="off" {% if frappe.form_dict.q %}value="{{ frappe.form_dict.q }}"{% endif %}>
+        </form>
+    </div>
+
     <div class="new-discussion">
         <form type="submit" action="/new" method=GET>
         <input class="form-control new-discussion" placeholder="Start a new dicussion..." type="text" name="title" autocomplete="off">
@@ -11,6 +18,11 @@
     </div>
 
     {% include "gameplan/templates/includes/discussion_list.html" %}
+
+	{% if frappe.form_dict.q %}
+	<p style="margin-top: 30px;">
+		<a href="/" class="text-muted">Filtered by "{{ frappe.form_dict.q }}". Clear</a></p>
+	{% endif %}
 
 </div>
 

@@ -4,12 +4,14 @@
 
 from __future__ import unicode_literals
 import frappe
+import json
 
+from frappe.utils.file_manager import save_file
 from gameplan.utils import get_user_info, get_discussion_list
 from frappe import _
 
 @frappe.whitelist()
-def new_discussion(title, content):
+def new_discussion(title, content, files):
 	discussion = frappe.new_doc("Discussion")
 	discussion.title = title
 
@@ -25,19 +27,26 @@ def new_discussion(title, content):
 		discussion.content = content
 		discussion.insert(ignore_permissions=True)
 
+	save_files(files, discussion.doctype, discussion.name)
+
 	frappe.publish_realtime("discussion_list_update")
 
 	return discussion.get_route()
 
 @frappe.whitelist()
-def add_comment(name, content):
+def add_comment(name, content, files):
 	discussion = frappe.get_doc("Discussion", name)
 	discussion.append("comments", {"content": content, "user": frappe.session.user})
 	discussion.read = None
 	discussion.save(ignore_permissions=True)
 
+
 	last_comment = discussion.comments[-1]
+
+	save_files(files, last_comment.doctype, last_comment.name)
+
 	last_comment.update(get_user_info(last_comment.user))
+	last_comment.attachments = discussion.get_attachments(last_comment.doctype, last_comment.name)
 
 	frappe.publish_realtime("new_comment", {
 		"discussion_name": discussion.name,
@@ -49,12 +58,18 @@ def add_comment(name, content):
 	return "ok"
 
 
+def save_files(files, doctype, name):
+	if files:
+		files = json.loads(files)
+		for file in files:
+			save_file(file['name'], file['content'], doctype, name,
+				decode=True, is_private=1)
+
 @frappe.whitelist()
 def delete_discussion(name):
 	discussion = frappe.get_doc("Discussion", name)
 	if discussion.owner == frappe.session.user:
-		discussion.published = 0
-		discussion.save(ignore_permissions=True)
+		discussion.archive()
 
 		frappe.publish_realtime("discussion_list_update", {})
 

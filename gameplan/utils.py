@@ -7,12 +7,21 @@ import frappe
 import json
 from frappe.utils import get_fullname, now_datetime
 
-def get_discussion_list():
+def get_discussion_list(filters=None):
+	if not filters:
+		filters = {}
+
+	if not 'published' in filters:
+		filters['published'] = 1
+
+	if not 'archived' in filters:
+		filters['archived'] = 0
+
 	discussions = frappe.get_all("Discussion",
-		fields=["page_name", "parent_website_route", "title", "owner", "name",
+		fields= ["page_name", "parent_website_route", "title", "owner", "name",
 			"modified", "`read`"],
-		filters={"published": 1},
-		order_by="modified desc", limit_page_length=20)
+		filters= filters,
+		order_by= "modified desc", limit_page_length=20)
 
 	for d in discussions:
 		d.timesince = timesince(d.modified, default="now", small=True)
@@ -93,3 +102,9 @@ def timesince(dt, default="just now", small=False):
 				return "%d %s ago" % (period, singular if period == 1 else plural)
 
 	return default
+
+def get_home_page(user):
+	if user=='Guest':
+		return 'login'
+	else:
+		return 'index'

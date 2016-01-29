@@ -1,5 +1,6 @@
 @link-color: #579EDF;
 @text-muted: #B2BAC2;
+@border-color: #e2e2e2;
 
 @import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300);
 
@@ -52,12 +53,23 @@ header, footer, .page-header-block, .page-breadcrumbs {
 
 // Discussion Page
 
-input.new-discussion, textarea.new-discussion-content, .form-signin input {
+input.new-discussion, textarea.new-discussion-content, .form-signin input, input.search {
   border: none;
   padding: 0px;
   box-shadow: none !important;
   background-color: inherit !important;
   resize: none;
+}
+
+.search-wrapper {
+	padding-bottom: 30px;
+}
+
+.search-wrapper .octicon-search {
+	margin-left: -30px;
+	margin-top: 7px;
+	float: left;
+	color: #d1d8dd;
 }
 
 textarea.new-discussion-content {
@@ -117,9 +129,9 @@ textarea.new-discussion-content {
 }
 
 .discussion-help {
+	padding-top: 30px;
 	padding-bottom: 20px;
-	padding-top: 60px;
-	border-bottom: 1px solid #e2e2e2;
+	border-bottom: 1px solid @border-color;
 }
 
 .user-circle {
@@ -129,6 +141,31 @@ textarea.new-discussion-content {
 	margin-left: -10px;
 }
 
+.discussion-thumb-list {
+	padding-top: 15px;
+}
+
+.discussion-thumb {
+	width: 160px;
+	height: 120px;
+	display: inline-block;
+	margin-right: 10px;
+	border: 1px solid @border-color;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.discussion-thumb .close& {
+	margin-right: 5px;
+	margin-top: 2px;
+	cursor: pointer;
+
+	&:hover {
+		color: #000;
+	}
+}
+
 
 // login
 
@@ -136,18 +173,19 @@ textarea.new-discussion-content {
 	margin: 0px;
 	margin-top: 70px !important;
 	padding: 0px !important;
-	padding-top: 100px !important;
+	padding-top: 70px !important;
 	background-color: #f7f7f7 !important;
 	background-image: url(/assets/gameplan/img/gameplan.png);
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
+	background-size: 70%;
 }
 
 .form-signin input {
 	background-color: #f7f7f7;
 	padding: 10px 0px !important;
 	border-radius: 0px;
-	border-bottom: 1px solid #e2e2e2;
+	border-bottom: 1px solid @border-color;
 }
 
 .form-signin a,
@@ -157,11 +195,16 @@ textarea.new-discussion-content {
 }
 
 
-.form-signin button, .form-signin button:hover {
+.form-signin button, .form-signin button:hover, .form-signin button:focus {
 	background-color: inherit;
 	color: @link-color;
 	padding: 0px;
-	font-size: 14px;
+	font-size: 16px;
+	width: initial;
+}
+
+.form-signin p.text-center {
+	text-align: left;
 }
 
 

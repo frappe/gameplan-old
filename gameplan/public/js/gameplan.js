@@ -1,41 +1,52 @@
 frappe.ready(function() {
-	frappe.boot = {};
 	frappe.socket.init();
-
 	$('.new-discussion-content').textareaAutoSize();
+});
 
-	if(window.discussion_name) {
-		$('.discussion-block.editable').on('click', function() {
-			$('.new-discussion-content').focus();
-		});
-
-		$('.new-discussion-content')
-			.on("focus", function() {
-				$(this).parents(".discussion-block").addClass("active");
-			})
-			.on("blur", function() {
-				$(this).parents(".discussion-block").removeClass("active");
-			})
-			.on("keydown", function(e) {
-				if(e.which==13 && (e.ctrlKey || e.metaKey)) {
-					frappe.call({
-						method: "gameplan.api.add_comment",
-						args: {
-							name: window.discussion_name,
-							content: $('.new-discussion-content').val()
-						},
-						success: function(r) {
-							$(r.message).appendTo('.discussion-comments');
-							$('.new-discussion-content').val('');
-						}
-					});
+var gameplan = {
+	setup_dropfile: function() {
+		$(document).on('dragenter dragover', false)
+			.on('drop', function (e) {
+				var dataTransfer = e.originalEvent.dataTransfer;
+				if (!(dataTransfer && dataTransfer.files
+					&& dataTransfer.files.length > 0)) {
+					return;
 				}
+				e.stopPropagation();
+				e.preventDefault();
+
+				$.each(dataTransfer.files, function(i, fileobj) {
+					// render files
+					var freader = new FileReader();
+					freader.onload = function() {
+						var dataurl = freader.result;
+						var $img = $('<div data-name="'
+							+ fileobj.name +'" class="discussion-thumb" \
+							style="background-image:url('+ dataurl +');">\
+							<span class="pull-right close">&times;</span>\
+							</div>')
+							.appendTo('.discussion-thumb-list.is-editable');
+
+						$img.find('.close').on('click', function() {
+							$img.remove();
+						});
+
+					};
+					freader.readAsDataURL(fileobj);
+				});
+			});
+	},
+	get_files: function() {
+		var files = [];
+		$('.discussion-thumb-list.is-editable .discussion-thumb').each(
+			function() {
+				files.push({
+					name: $(this).attr('data-name'),
+					content: $(this).css('background-image').slice(5, -2)
+				});
 			});
 
-		frappe.realtime.on("new_comment", function(data) {
-			if(data.discussion_name === window.discussion_name) {
-				$(data.comment_html).appendTo('.discussion-comments');
-			}
-		});
+		return files;
 	}
-});
+
+}

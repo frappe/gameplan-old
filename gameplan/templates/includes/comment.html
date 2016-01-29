@@ -23,6 +23,7 @@
         <textarea class="form-control
             new-discussion-content"
             placeholder="Add to this discussion"></textarea>
+        <div class="discussion-thumb-list is-editable"></div>
         <div class="discussion-help text-muted row">
             <div class="col-xs-6">
                 Ctrl + Enter to post
@@ -35,6 +36,14 @@
         <div class="discussion-content">
             {{ comment.content|markdown }}
         </div>
+            {% if comment.attachments %}
+            <div class="discussion-thumb-list">
+                {% for a in comment.attachments %}
+                <div class="discussion-thumb"
+                    style='background-image: url("{{ a }}")'></div>
+                {% endfor %}
+            </div>
+            {% endif %}
         {% endif %}
     </div>
 </div>

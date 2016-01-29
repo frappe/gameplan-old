@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 import frappe
 import random
 from frappe.website.website_generator import WebsiteGenerator
+from gameplan.utils import get_discussion_list
 
 color_options = ['#1FBBA0', "#D40222", "#77D24B"]
 
@@ -30,12 +31,5 @@ class DiscussionUser(WebsiteGenerator):
             self.color = color_options[random.randrange(0, 3)]
 
     def get_context(self, context):
-        owner = frappe.db.get_value(
-            "User", {"username": context.pathname}, "email")
-        print owner
-        context.discussions = frappe.get_all("Discussion",
-                                             fields=[
-                                                 "page_name", "parent_website_route", "title"],
-                                             filters={
-                                                 "published": 1, "owner": owner},
-                                             order_by="creation desc", limit_page_length=20)
+		context.discussions = get_discussion_list({
+			"owner": frappe.db.get_value("User", {"username": context.pathname})})

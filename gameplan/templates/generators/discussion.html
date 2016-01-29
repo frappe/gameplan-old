@@ -7,22 +7,68 @@
 {% block content %}
 
 <div class="gameplan-container">
-    <a href="/" class="text-muted back-to">
-        <i class="octicon octicon-chevron-left"></i> Back to Discussions
-    </a>
+	{% include "gameplan/templates/includes/back_to_discussions.html" %}
 
-    {{ comment_block(doc, doc.title) }}
+	{{ comment_block(doc, doc.title) }}
 
-    <div class="discussion-comments">
-        {% for comment in comments %}
-            {{ comment_block(comment) }}
-        {% endfor %}
-    </div>
+	<div class="discussion-comments">
+		{% for comment in comments %}
+			{{ comment_block(comment) }}
+		{% endfor %}
+	</div>
 
-    {{ comment_block(user_info, editable=True) }}
+	{{ comment_block(user_info, editable=True) }}
 
 </div>
-<script>window.discussion_name = "{{ name }}";</script>
+<script>
+window.discussion_name = "{{ name }}";
+frappe.ready(function() {
+	frappe.socket.init();
+
+	// setup dropfile
+	gameplan.setup_dropfile();
+
+	$('.discussion-block.editable').on('click', function() {
+		$('.new-discussion-content').focus();
+	});
+
+	$('.new-discussion-content')
+		.on("focus", function() {
+			$(this).parents(".discussion-block").addClass("active");
+		})
+		.on("blur", function() {
+			$(this).parents(".discussion-block").removeClass("active");
+		})
+		.on("keydown", function(e) {
+			if(e.which==13 && (e.ctrlKey || e.metaKey)) {
+				frappe.call({
+					method: "gameplan.api.add_comment",
+					args: {
+						name: window.discussion_name,
+						content: $('.new-discussion-content').val(),
+						files: gameplan.get_files()
+					},
+					success: function(r) {
+						$(r.message).appendTo('.discussion-comments');
+						$('.new-discussion-content').val('');
+						$('.discussion-thumb-list.is-editable').empty();
+					}
+				});
+			}
+		});
+
+	frappe.realtime.on("new_comment", function(data) {
+		console.log(data);
+		if(data.discussion_name === window.discussion_name) {
+			$(data.comment_html).appendTo('.discussion-comments');
+			$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+		}
+	});
+
+	$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+});
+
+</script>
 {% endblock %}
 
 

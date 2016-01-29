@@ -4,17 +4,8 @@
 
 {% block content %}
 <div class="gameplan-container">
-<a href="/">
-     <p class="octicon octicon-arrow-left text-muted">  Back to discussion</p>
- </a>
-{% for discussion in discussions %}
+	{% include "gameplan/templates/includes/back_to_discussions.html" %}
 
-<div class="discussion-list">
-    <a href="/{{ discussion.parent_website_route }}/{{ discussion.page_name }}">
-        <h5 class="discussion-title">{{ discussion.title }}</h5>
-    </a>
+	{% include "gameplan/templates/includes/discussion_list.html" %}
 </div>
-{% endfor %}
-
 {% endblock %}
-</div>
